@@ -29,8 +29,8 @@ public class LDA {
         // Create a model with 100 topics, alpha_t = 0.01, beta_w = 0.01
         //  Note that the first parameter is passed as the sum over topics, while
         //  the second is the parameter for a single dimension of the Dirichlet prior.
-        int numTopics = 100;
-        ParallelTopicModel model = new ParallelTopicModel(numTopics, 1.0, 0.01);
+        int numTopics = 80;
+        ParallelTopicModel model = new ParallelTopicModel(numTopics, 50.0/numTopics, 0.01);
 
         model.addInstances(instances);
 
@@ -49,8 +49,8 @@ public class LDA {
 
         FeatureSequence tokens = (FeatureSequence) model.getData().get(0).instance.getData();
         LabelSequence topics = model.getData().get(0).topicSequence;
-        model.printDocumentTopics(new File("topics.txt"));
-
+        model.printDocumentTopics(new File("docTopics.txt"));
+        model.printTypeTopicCounts(new File("typeTopicCounts.txt"));
         model.printTopicWordWeights(new File("topicWordWeights.txt"));
         Formatter out = new Formatter(new StringBuilder(), Locale.US);
         for (int position = 0; position < tokens.getLength(); position++) {
